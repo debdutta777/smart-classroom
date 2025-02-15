@@ -1,56 +1,46 @@
+import React, { useState } from "react";
 import {
-    AppBar,
-    Box,
-    Button,
-    Card,
-    CardContent,
-    Container,
-    Grid,
-    IconButton,
-    Stack,
-    Toolbar,
-    Typography,
-    useTheme,
-    useMediaQuery,
-  } from "@mui/material";
-  import {
-    Menu as MenuIcon,
-    School as SchoolIcon,
-    Computer as ComputerIcon,
-    Group as GroupIcon,
-    Assignment as AssignmentIcon,
-  } from "@mui/icons-material";
-  
-  export default function StudentLanding() {
-    const theme = useTheme()
-    const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
-  
-    return (
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+  useTheme,
+  useMediaQuery,
+  createTheme,
+  ThemeProvider,
+  CssBaseline,
+} from "@mui/material";
+import {
+  Computer as ComputerIcon,
+  Group as GroupIcon,
+  Assignment as AssignmentIcon,
+} from "@mui/icons-material";
+import Navbar from "./Navbar";
+
+export default function StudentLanding() {
+  const [darkMode, setDarkMode] = useState(true); // Set dark mode as default
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: darkMode ? "dark" : "light",
+    },
+  });
+
+  const handleThemeChange = () => {
+    setDarkMode(!darkMode);
+  };
+
+  return (
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
       <Box sx={{ flexGrow: 1 }}>
-        {/* Header */}
-        <AppBar position="static" color="primary">
-          <Toolbar>
-            <SchoolIcon sx={{ mr: 2 }} />
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              StudentHub
-            </Typography>
-            {isMobile ? (
-              <IconButton color="inherit">
-                <MenuIcon />
-              </IconButton>
-            ) : (
-              <Stack direction="row" spacing={2}>
-                <Button color="inherit">Features</Button>
-                <Button color="inherit">Testimonials</Button>
-                <Button color="inherit">Contact</Button>
-                <Button variant="contained" color="secondary">
-                  Sign Up
-                </Button>
-              </Stack>
-            )}
-          </Toolbar>
-        </AppBar>
-  
+        <Navbar isMobile={isMobile} darkMode={darkMode} onThemeChange={handleThemeChange} />
         {/* Hero Section */}
         <Box
           sx={{
@@ -77,7 +67,6 @@ import {
             </Stack>
           </Container>
         </Box>
-  
         {/* Features Section */}
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>
@@ -106,7 +95,6 @@ import {
             ))}
           </Grid>
         </Container>
-  
         {/* Testimonials Section */}
         <Box sx={{ bgcolor: "background.paper", py: 8 }}>
           <Container maxWidth="md">
@@ -134,7 +122,6 @@ import {
             </Grid>
           </Container>
         </Box>
-  
         {/* Call to Action */}
         <Box
           sx={{
@@ -157,7 +144,6 @@ import {
             </Stack>
           </Container>
         </Box>
-  
         {/* Footer */}
         <Box
           component="footer"
@@ -176,43 +162,44 @@ import {
           </Container>
         </Box>
       </Box>
-    )
-  }
-  
-  // Data
-  const features = [
-    {
-      title: "Online Learning",
-      description: "Access your courses anytime, anywhere with our comprehensive online learning platform.",
-      icon: <ComputerIcon sx={{ fontSize: 40, color: "primary.main", mb: 2 }} />,
-    },
-    {
-      title: "Study Groups",
-      description: "Connect with fellow students and form study groups to learn together effectively.",
-      icon: <GroupIcon sx={{ fontSize: 40, color: "primary.main", mb: 2 }} />,
-    },
-    {
-      title: "Track Progress",
-      description: "Monitor your academic progress with detailed analytics and performance tracking.",
-      icon: <AssignmentIcon sx={{ fontSize: 40, color: "primary.main", mb: 2 }} />,
-    },
-  ]
-  
-  const testimonials = [
-    {
-      text: "This platform has completely transformed how I study. The collaborative features are amazing!",
-      name: "Sarah Johnson",
-      role: "Computer Science Student",
-    },
-    {
-      text: "The progress tracking tools helped me stay on top of my assignments and improve my grades.",
-      name: "Michael Chen",
-      role: "Engineering Student",
-    },
-    {
-      text: "I love how easy it is to connect with other students and share resources.",
-      name: "Emily Brown",
-      role: "Business Student",
-    },
-  ]
+    </ThemeProvider>
+  );
+}
+
+// Data
+const features = [
+  {
+    title: "Online Learning",
+    description: "Access your courses anytime, anywhere with our comprehensive online learning platform.",
+    icon: <ComputerIcon sx={{ fontSize: 40, color: "primary.main", mb: 2 }} />,
+  },
+  {
+    title: "Study Groups",
+    description: "Connect with fellow students and form study groups to learn together effectively.",
+    icon: <GroupIcon sx={{ fontSize: 40, color: "primary.main", mb: 2 }} />,
+  },
+  {
+    title: "Track Progress",
+    description: "Monitor your academic progress with detailed analytics and performance tracking.",
+    icon: <AssignmentIcon sx={{ fontSize: 40, color: "primary.main", mb: 2 }} />,
+  },
+];
+
+const testimonials = [
+  {
+    text: "This platform has completely transformed how I study. The collaborative features are amazing!",
+    name: "Sarah Johnson",
+    role: "Computer Science Student",
+  },
+  {
+    text: "The progress tracking tools helped me stay on top of my assignments and improve my grades.",
+    name: "Michael Chen",
+    role: "Engineering Student",
+  },
+  {
+    text: "I love how easy it is to connect with other students and share resources.",
+    name: "Emily Brown",
+    role: "Business Student",
+  },
+];
 
